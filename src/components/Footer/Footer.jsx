@@ -167,7 +167,7 @@ export default function Footer() {
 
             <div className="moscow-footer-certified reveal" style={{ "--d": 2 }}>
               <BadgeCheck size={12} />
-              <span>Certified Hospital</span>
+              <span>Medical Center</span>
             </div>
 
             {/* Social links */}
