@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WhyChooseUs.css";
 
-import ayurvedaImage from "../../assets/images/ayurveda-treatment.png";
+import ayurvedaVideo from "../../assets/videos/ayurveda-treatment.mp4";
 
 const services = [
   "Outpatient Care Services",
@@ -13,7 +13,10 @@ const services = [
 
 export default function WhyChooseUs() {
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
   const [visible, setVisible] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -28,7 +31,7 @@ export default function WhyChooseUs() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          observer.disconnect(); // animate only once
+          observer.disconnect();
         }
       },
       { threshold: 0.15 }
@@ -37,6 +40,21 @@ export default function WhyChooseUs() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  const toggleVideo = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error("Video playback failed:", error);
+      }
+    } else {
+      video.pause();
+    }
+  };
 
   return (
     <section
@@ -63,7 +81,10 @@ export default function WhyChooseUs() {
         <div className="why-moscow-content">
 
           {/* Left content */}
-          <div className="why-moscow-text reveal reveal-left" style={{ "--delay": "0.5s" }}>
+          <div
+            className="why-moscow-text reveal reveal-left"
+            style={{ "--delay": "0.5s" }}
+          >
             <h2>
               Why Choose Moscow
               <br className="desktop-break" />
@@ -95,14 +116,28 @@ export default function WhyChooseUs() {
             </div>
           </div>
 
-          {/* Right image */}
-          <div className="why-moscow-image-wrap reveal reveal-right" style={{ "--delay": "0.65s" }}>
-            <img
-              src={ayurvedaImage}
-              alt="Ayurvedic treatment at Moscow International Holistic Medical Centre"
-              className="why-moscow-image"
-            />
+          
+          {/* Right video - Video only */}
+          <div
+            className="why-moscow-video-wrap reveal reveal-right"
+            style={{ "--delay": "0.65s" }}
+          >
+            <video
+              ref={videoRef}
+              className="why-moscow-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+            >
+              <source src={ayurvedaVideo} type="video/mp4" />
+              Your browser does not support video playback.
+            </video>
           </div>
+
 
         </div>
       </div>
