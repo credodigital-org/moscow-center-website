@@ -17,7 +17,7 @@ import "./About.css";
    1. Clinic reception photo (wide) -> hero
    2. Doctor / patient consultation photo -> story section
 ------------------------------------------- */
-import aboutHeroImage from "../assets/images/about-clinic1.png";
+import aboutHeroImage from "../assets/images/about-clinic2.jpg";
 import aboutStoryImage from "../assets/images/about-consultation.jpeg";
 
 const CHIPS = [
